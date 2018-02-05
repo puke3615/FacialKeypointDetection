@@ -1,7 +1,29 @@
+# coding=utf-8
 import os
+import platform
+
+os_name = platform.system().lower()
+
+
+def is_mac():
+    return os_name.startswith('darwin')
+
+
+def is_windows():
+    return os_name.startswith('windows')
+
+
+def is_linux():
+    return os_name.startswith('linux')
+
 
 # 根路径配置
-PATH_ROOT = 'G:/Dataset/FacialKeyPointDetection'
+if is_mac():
+    PATH_ROOT = '/Users/zijiao/Documents/Dataset/FacialKeyPointDetection'
+elif is_windows():
+    PATH_ROOT = 'G:/Dataset/FacialKeyPointDetection'
+else:
+    raise EnvironmentError('No support for this os.')
 
 # 训练集
 PATH_TRAIN = os.path.join(PATH_ROOT, 'trainImageList.txt')

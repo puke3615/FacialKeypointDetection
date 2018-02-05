@@ -53,19 +53,19 @@ class DataReader:
         if not os.path.exists(path):
             raise Exception()
         with open(path) as f:
-            self.files = []
-            self.data_list = []
+            files = []
+            data_list = []
             for line in f:
                 items = line.split(' ')
-                self.files.append(os.path.join(PATH_ROOT, items[0]))
-                self.data_list.append([float(item) for item in items[1:]])
-            self.files = np.array(self.files)
-            self.data_list = np.array(self.data_list)
+                files.append(os.path.join(PATH_ROOT, items[0].replace('\\', '/')))
+                data_list.append([float(item) for item in items[1:]])
+            self.files = np.array(files)
+            self.data_list = np.array(data_list)
 
 
 if __name__ == '__main__':
     reader = DataReader(PATH_TRAIN, batch_size=100, x_mode='file')
-    batch_x, batch_y = reader.get_generator().__next__()
+    batch_x, batch_y = next(reader.get_generator())
     print('Read %s images' % len(batch_x))
 
     index = 0
